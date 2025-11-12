@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import { useRecipeStore } from '../components/recipeStore';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+  const recipes = useRecipeStore((s) => s.recipes);
 
   return (
     <div>
@@ -10,9 +11,11 @@ const RecipeList = () => {
         <p>No recipes yet. Add one below!</p>
       ) : (
         recipes.map((recipe) => (
-          <div key={recipe.id} style={{ marginBottom: '1rem' }}>
+          <div key={recipe.id} style={{ marginBottom: '1rem', border: '1px solid #eee', padding: '0.5rem' }}>
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
+            <Link to={`/recipes/${recipe.id}`} style={{ marginRight: 8 }}>View</Link>
+            <Link to={`/recipes/${recipe.id}/edit`}>Edit</Link>
           </div>
         ))
       )}
@@ -21,3 +24,4 @@ const RecipeList = () => {
 };
 
 export default RecipeList;
+

@@ -1,5 +1,8 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
+import RecipeDetails from './components/RecipeDetails';
+import EditRecipeForm from './components/EditRecipeForm';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -10,9 +13,23 @@ function App() {
 
   return (
     <>
+    <Router>
       <div>
+        <Routes>
+          <Route path="/" element={
+            <>
         <AddRecipeForm />
         <RecipeList />
+
+        </>
+          } />
+          <Route path="/recipes/:id" element={<RecipeDetails />} />
+          <Route path="/recipes/:id/edit" element={<EditRecipeForm />} />
+
+          {/* fallback route */}
+          <Route path="*" element={<div><p>Page not found.</p></div>} />
+        </Routes>
+
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -20,6 +37,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+      </Router>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
