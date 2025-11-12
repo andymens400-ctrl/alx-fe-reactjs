@@ -3,6 +3,7 @@ import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
+import SearchBar from './components/SearchBar';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={
             <>
+        <SearchBar />
         <AddRecipeForm />
         <RecipeList />
 
@@ -25,9 +27,7 @@ function App() {
           } />
           <Route path="/recipes/:id" element={<RecipeDetails />} />
           <Route path="/recipes/:id/edit" element={<EditRecipeForm />} />
-
-          {/* fallback route */}
-          <Route path="*" element={<div><p>Page not found.</p></div>} />
+        
         </Routes>
 
         <a href="https://vite.dev" target="_blank">
