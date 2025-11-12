@@ -7,8 +7,10 @@ const EditRecipeForm = () => {
   const recipeId = Number(id);
   const navigate = useNavigate();
 
-  const recipe = useRecipeStore((s) => s.recipes.find((r) => r.id === recipeId));
-  const updateRecipe = useRecipeStore((s) => s.updateRecipe);
+  const recipe = useRecipeStore((state) =>
+    state.recipes.find((r) => r.id === recipeId)
+  );
+  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -24,23 +26,44 @@ const EditRecipeForm = () => {
     return <p>Recipe not found.</p>;
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault(); 
+
     if (!title.trim() || !description.trim()) return;
 
-    updateRecipe({ id: recipeId, title: title.trim(), description: description.trim() });
+    updateRecipe({
+      id: recipeId,
+      title: title.trim(),
+      description: description.trim(),
+    });
+
     navigate(`/recipes/${recipeId}`);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Edit Recipe</h2>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+
+      <input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Recipe Title"
+        required
+      />
       <br />
-      <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Recipe Description"
+        required
+      />
       <br />
-      <button type="submit">Save</button>
-      <button type="button" onClick={() => navigate(-1)} style={{ marginLeft: 8 }}>Cancel</button>
+
+      <button type="submit">Save Changes</button>
+      <button type="button" onClick={() => navigate(-1)} style={{ marginLeft: 8 }}>
+        Cancel
+      </button>
     </form>
   );
 };
