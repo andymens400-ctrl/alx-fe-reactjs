@@ -1,10 +1,10 @@
-import SearchBar from "./components/SearchBar";   // <-- REQUIRED
+import Search from "./components/SearchBar";
 
 export default function App() {
   return (
-    <div>
-      <h1>GitHub User Search</h1>
-      <SearchBar />
+    <div style={{ padding: "2rem" }}>
+      <h1 style={{ textAlign: "center" }}>GitHub User Search</h1>
+      <Search />
     </div>
   );
 }
