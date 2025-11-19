@@ -1,7 +1,17 @@
 import axios from "axios";
 
+// Basic user fetch (required by the task)
+export async function fetchUserData(username) {
+  try {
+    const response = await axios.get(`https://api.github.com/users/${username}`);
+    return response.data; // single user object
+  } catch (error) {
+    throw new Error("User not found");
+  }
+}
+
+// Advanced search functionality
 export async function fetchAdvancedUsers({ username, location, minRepos }) {
-  // Build GitHub search query
   let query = "";
 
   if (username) query += `${username} in:login `;
