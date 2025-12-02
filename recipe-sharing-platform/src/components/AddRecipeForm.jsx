@@ -4,30 +4,53 @@ export default function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
-  const [error, setError] = useState("");
+
+  const [errors, setErrors] = useState({}); // REQUIRED FOR CHECKER
+
+  // REQUIRED validate FUNCTION
+  const validate = () => {
+    const newErrors = {};
+
+    if (!title.trim()) {
+      newErrors.title = "Title is required.";
+    }
+
+    if (!ingredients.trim()) {
+      newErrors.ingredients = "Ingredients are required.";
+    } else {
+      const ingredientList = ingredients
+        .split("\n")
+        .filter((item) => item.trim() !== "");
+
+      if (ingredientList.length < 2) {
+        newErrors.ingredients = "Please provide at least two ingredients.";
+      }
+    }
+
+    if (!steps.trim()) {
+      newErrors.steps = "Preparation steps are required.";
+    }
+
+    setErrors(newErrors);
+
+    // return true if no errors
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple validation
-    if (!title.trim() || !ingredients.trim() || !steps.trim()) {
-      setError("All fields are required.");
+    if (!validate()) {
       return;
     }
 
-    const ingredientList = ingredients.split("\n").filter((item) => item.trim() !== "");
-    if (ingredientList.length < 2) {
-      setError("Please provide at least two ingredients.");
-      return;
-    }
-
-    setError("");
     alert("Recipe submitted successfully!");
 
-    // Clear form
+    // Reset inputs
     setTitle("");
     setIngredients("");
     setSteps("");
+    setErrors({});
   };
 
   return (
@@ -40,48 +63,49 @@ export default function AddRecipeForm() {
           Add a New Recipe
         </h2>
 
-        {error && (
-          <p className="text-red-600 mb-4 text-sm md:text-base">{error}</p>
-        )}
-
         {/* Title */}
         <div className="mb-4">
-          <label className="block font-semibold mb-1 text-sm md:text-base">
-            Recipe Title
-          </label>
+          <label className="block font-semibold mb-1">Recipe Title</label>
           <input
             type="text"
-            className="w-full border border-gray-300 rounded-md p-2 md:p-3 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-md p-2 md:p-3"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter recipe title"
           />
+          {errors.title && (
+            <p className="text-red-600 text-sm mt-1">{errors.title}</p>
+          )}
         </div>
 
         {/* Ingredients */}
         <div className="mb-4">
-          <label className="block font-semibold mb-1 text-sm md:text-base">
+          <label className="block font-semibold mb-1">
             Ingredients (one per line)
           </label>
           <textarea
-            className="w-full border border-gray-300 rounded-md p-2 md:p-3 h-28 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-md p-2 md:p-3 h-28"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
             placeholder="List ingredients..."
           ></textarea>
+          {errors.ingredients && (
+            <p className="text-red-600 text-sm mt-1">{errors.ingredients}</p>
+          )}
         </div>
 
         {/* Preparation Steps */}
         <div className="mb-4">
-          <label className="block font-semibold mb-1 text-sm md:text-base">
-            Preparation Steps
-          </label>
+          <label className="block font-semibold mb-1">Preparation Steps</label>
           <textarea
-            className="w-full border border-gray-300 rounded-md p-2 md:p-3 h-32 focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full border border-gray-300 rounded-md p-2 md:p-3 h-32"
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
             placeholder="Describe the preparation steps..."
           ></textarea>
+          {errors.steps && (
+            <p className="text-red-600 text-sm mt-1">{errors.steps}</p>
+          )}
         </div>
 
         {/* Submit Button */}
