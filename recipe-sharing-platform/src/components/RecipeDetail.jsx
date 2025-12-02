@@ -55,8 +55,8 @@ export default function RecipeDetail() {
           ))}
         </ul>
 
-        {/* Instructions Section */}
-        <h2 className="text-2xl font-semibold mb-2">Instructions</h2>
+        {/* instructions Section */}
+        <h2 className="text-2xl font-semibold mb-2">instructions</h2>
         <ol className="list-decimal list-inside bg-gray-50 p-4 rounded-lg space-y-2">
           {recipe.steps?.map((step, index) => (
             <li key={index} className="text-gray-700">
