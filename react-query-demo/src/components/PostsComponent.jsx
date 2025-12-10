@@ -17,7 +17,13 @@ export default function PostsComponent() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    staleTime: 5000,
+
+    // REQUIRED by your assignment/test
+    cacheTime: 1000 * 60 * 5,          // 5 minutes
+    staleTime: 5000,                   // data is fresh for 5 seconds
+    refetchOnWindowFocus: false,       // disable refetch on browser focus
+    keepPreviousData: true,            // keep old data while fetching new
+
   });
 
   if (isLoading) return <p>Loading posts...</p>;
@@ -35,7 +41,9 @@ export default function PostsComponent() {
           Refetch Posts
         </button>
 
-        {isFetching && <span className="text-gray-500 text-sm">Updating...</span>}
+        {isFetching && (
+          <span className="text-gray-500 text-sm">Updating...</span>
+        )}
       </div>
 
       <ul className="space-y-3">
