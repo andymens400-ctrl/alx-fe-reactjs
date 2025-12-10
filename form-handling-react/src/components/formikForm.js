@@ -13,12 +13,14 @@ export default function FormikForm() {
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
-    password: Yup.string().min(6, "Password must be 6+ characters").required(),
+    password: Yup.string()
+      .min(6, "Password must be 6 characters or more")
+      .required("Password is required"),
   });
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log("Form Submitted:", values);
-    alert("User Registered Successfully! (Formik + Mock API)");
+    console.log("Formik submitted:", values);
+    alert("User registered successfully! (Formik)");
     resetForm();
   };
 
@@ -32,9 +34,13 @@ export default function FormikForm() {
         onSubmit={handleSubmit}
       >
         <Form>
+          {/* Username */}
           <div className="mb-4">
-            <label className="block mb-1">Username</label>
+            <label className="block mb-1" htmlFor="username">
+              Username
+            </label>
             <Field
+              id="username"
               name="username"
               className="border p-2 w-full rounded"
             />
@@ -45,9 +51,13 @@ export default function FormikForm() {
             />
           </div>
 
+          {/* Email */}
           <div className="mb-4">
-            <label className="block mb-1">Email</label>
+            <label className="block mb-1" htmlFor="email">
+              Email
+            </label>
             <Field
+              id="email"
               name="email"
               type="email"
               className="border p-2 w-full rounded"
@@ -59,9 +69,13 @@ export default function FormikForm() {
             />
           </div>
 
+          {/* Password */}
           <div className="mb-4">
-            <label className="block mb-1">Password</label>
+            <label className="block mb-1" htmlFor="password">
+              Password
+            </label>
             <Field
+              id="password"
               name="password"
               type="password"
               className="border p-2 w-full rounded"
