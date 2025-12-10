@@ -1,23 +1,36 @@
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import ProfileDetails from "./components/ProfileDetails";
+import ProfileSettings from "./components/ProfileSettings";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
-    <Router>
-      <Switch>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-        <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" element={<Login />} />
 
-        {/* Protected route */}
-        <ProtectedRoute path="/profile" component={Profile} />
+        {/* Protected Route Wrapper */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        >
+          {/* Nested routes */}
+          <Route index element={<ProfileDetails />} />
+          <Route path="settings" element={<ProfileSettings />} />
+        </Route>
 
-        {/* fallback */}
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+        {/* Fallback */}
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
