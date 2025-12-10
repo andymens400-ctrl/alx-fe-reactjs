@@ -3,8 +3,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import ProfileDetails from "./components/ProfileDetails";
 import ProfileSettings from "./components/ProfileSettings";
-import Login from "./components/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
+import BlogPost from "./components/BlogPost";
 
 export default function App() {
   return (
@@ -12,21 +11,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/login" element={<Login />} />
-
-        {/* Protected Route Wrapper */}
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        >
-          {/* Nested routes */}
+        {/* Profile with nested routes (already required earlier) */}
+        <Route path="/profile" element={<Profile />}>
           <Route index element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
         </Route>
+
+        {/* ★ Dynamic Routing Requirement ★ */}
+        <Route path="/blog/:id" element={<BlogPost />} />
 
         {/* Fallback */}
         <Route path="*" element={<Home />} />
