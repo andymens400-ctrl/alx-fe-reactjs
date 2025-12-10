@@ -1,8 +1,14 @@
-// src/components/ProtectedRoute.jsx
-import { Navigate } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
-export default function ProtectedRoute({ children }) {
-  const isAuthenticated = localStorage.getItem("auth") === "true";
+export default function ProtectedRoute({ component: Component, ...rest }) {
+  const isAuthenticated = true; // simulate login
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
 }
