@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import TodoList from "../components/TodoList";
 
@@ -24,7 +25,6 @@ describe("TodoList Component", () => {
     render(<TodoList />);
 
     const todo = screen.getByText("Learn React");
-
     fireEvent.click(todo);
 
     expect(todo).toHaveClass("completed");
@@ -34,7 +34,6 @@ describe("TodoList Component", () => {
     render(<TodoList />);
 
     const deleteButtons = screen.getAllByText("Delete");
-
     fireEvent.click(deleteButtons[0]);
 
     expect(screen.queryByText("Learn React")).not.toBeInTheDocument();

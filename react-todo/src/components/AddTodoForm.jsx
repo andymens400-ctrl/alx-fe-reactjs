@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 export default function AddTodoForm({ addTodo }) {
@@ -5,7 +6,8 @@ export default function AddTodoForm({ addTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!text.trim()) return;
+    if (text.trim() === "") return;
+
     addTodo(text);
     setText("");
   };
