@@ -4,6 +4,7 @@ import Profile from "./components/Profile";
 import ProfileDetails from "./components/ProfileDetails";
 import ProfileSettings from "./components/ProfileSettings";
 import BlogPost from "./components/BlogPost";
+import ProtectedRoute from "./components/ProtectedRoute"; // ✔ REQUIRED
 
 export default function App() {
   return (
@@ -11,13 +12,21 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* Profile with nested routes (already required earlier) */}
-        <Route path="/profile" element={<Profile />}>
+        {/* ✔ Protected Route Wrapper */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        >
+          {/* ✔ Nested Routes */}
           <Route index element={<ProfileDetails />} />
           <Route path="settings" element={<ProfileSettings />} />
         </Route>
 
-        {/* ★ Dynamic Routing Requirement ★ */}
+        {/* ✔ Dynamic Route */}
         <Route path="/blog/:id" element={<BlogPost />} />
 
         {/* Fallback */}
