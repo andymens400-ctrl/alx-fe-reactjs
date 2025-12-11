@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function AddTodoForm({ onAdd }) {
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (text.trim() === "") return;
+    if (!text.trim()) return;
     onAdd(text);
     setText("");
   };
@@ -13,12 +13,14 @@ export default function AddTodoForm({ onAdd }) {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        aria-label="todo-input"
+        placeholder="Add todo"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Add todo..."
+        data-testid="todo-input"
       />
-      <button type="submit">Add</button>
+      <button type="submit" data-testid="add-button">
+        Add
+      </button>
     </form>
   );
 }
